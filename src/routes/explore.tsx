@@ -86,9 +86,6 @@ function Explore() {
                     : "border-border bg-background text-foreground hover:border-terracotta hover:text-terracotta"
                 }`}
               >
-                {f === "Camping" && "🏕️ "}
-                {f === "Beach" && "🏖️ "}
-                {f === "Mountain" && "🏔️ "}
                 {f}
               </button>
             ))}

@@ -8,11 +8,6 @@ const categoryStyles: Record<string, string> = {
   Mountain: "bg-terracotta text-terracotta-foreground",
 };
 
-const categoryIcon: Record<string, string> = {
-  Camping: "🏕️",
-  Beach: "🏖️",
-  Mountain: "🏔️",
-};
 
 export function OutingCard({ outing }: { outing: Outing }) {
   const spotsLeft = outing.spotsTotal - outing.spotsTaken;

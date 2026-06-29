@@ -87,9 +87,6 @@ function CreateOuting() {
                         : "border-border bg-background hover:border-terracotta"
                     }`}
                   >
-                    {c === "Camping" && "🏕️ "}
-                    {c === "Beach" && "🏖️ "}
-                    {c === "Mountain" && "🏔️ "}
                     {c}
                   </button>
                 ))}

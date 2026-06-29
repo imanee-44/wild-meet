@@ -4,8 +4,10 @@ import { ArrowLeft, CalendarDays, Check, MapPin, Users } from "lucide-react";
 import { SiteNav, MobileNav } from "@/components/site-nav";
 import { getOuting, outings } from "@/lib/mock-data";
 
+import type { Outing } from "@/lib/mock-data";
+
 export const Route = createFileRoute("/outings/$id")({
-  loader: ({ params }) => {
+  loader: ({ params }): Outing => {
     const outing = getOuting(params.id);
     if (!outing) throw notFound();
     return outing;

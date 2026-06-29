@@ -137,10 +137,10 @@ export function getOuting(id: string) {
 }
 
 export const currentUser = {
-  name: "Mara Vidal",
-  initials: "MV",
-  bio: "Trail runner, weekend camper and golden-hour chaser. Mostly here to find people who'll wake up at 5am for a sunrise.",
-  tags: ["🏕️ Camping lover", "🌊 Beach addict", "🏔️ Sunrise hiker"],
-  organized: ["lake-mira-overnight"],
-  joined: ["wild-surf-saturday", "pine-trail-day-hike"],
+  name: "Yasmine Benali",
+  initials: "YB",
+  bio: "Casablancaise, trail runner et chasseuse de levers de soleil. Toujours partante pour un café à 5h avant de prendre la route de l'Atlas.",
+  tags: ["Camping lover", "Beach addict", "Sunrise hiker"],
+  organized: ["bin-el-ouidane-camp"],
+  joined: ["imsouane-surf-morning", "ifrane-cedar-hike"],
 };

@@ -21,9 +21,9 @@ export const Route = createFileRoute("/")({
 });
 
 const categories = [
-  { name: "Camping", icon: Tent, emoji: "🏕️", img: campingImg, blurb: "Slow nights under the pines.", tint: "from-forest/85" },
-  { name: "Beach", icon: Waves, emoji: "🏖️", img: beachImg, blurb: "Salt, sun, and long swims.", tint: "from-terracotta/80" },
-  { name: "Mountain", icon: MountainIcon, emoji: "🏔️", img: mountainImg, blurb: "Ridges, sunrises, summits.", tint: "from-forest/85" },
+  { name: "Camping", icon: Tent, img: campingImg, blurb: "Nuits lentes sous les cèdres de l'Atlas.", tint: "from-forest/85" },
+  { name: "Beach", icon: Waves, img: beachImg, blurb: "Sel, soleil et longues sessions de surf.", tint: "from-terracotta/80" },
+  { name: "Mountain", icon: MountainIcon, img: mountainImg, blurb: "Crêtes, levers de soleil, sommets.", tint: "from-forest/85" },
 ] as const;
 
 function Landing() {

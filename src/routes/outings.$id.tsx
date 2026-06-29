@@ -67,7 +67,7 @@ function OutingDetail() {
             <ArrowLeft className="h-4 w-4" /> Back to explore
           </Link>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-terracotta/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-terracotta-foreground">
-            {o.category === "Camping" && "🏕️"} {o.category === "Beach" && "🏖️"} {o.category === "Mountain" && "🏔️"} {o.category}
+            {o.category}
           </span>
           <h1 className="mt-4 font-serif text-4xl font-bold leading-tight text-cream sm:text-6xl">{o.title}</h1>
           <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-cream/90">

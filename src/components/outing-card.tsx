@@ -34,7 +34,6 @@ export function OutingCard({ outing }: { outing: Outing }) {
         <span
           className={`absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${categoryStyles[outing.category]}`}
         >
-          <span aria-hidden>{categoryIcon[outing.category]}</span>
           {outing.category}
         </span>
         <span className="absolute right-4 top-4 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold text-foreground">

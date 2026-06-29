@@ -37,7 +37,7 @@ export const Route = createFileRoute("/outings/$id")({
 });
 
 function OutingDetail() {
-  const o = Route.useLoaderData();
+  const o = Route.useLoaderData() as Outing;
   const [joined, setJoined] = useState(false);
   const spotsLeft = Math.max(0, o.spotsTotal - o.spotsTaken - (joined ? 1 : 0));
 

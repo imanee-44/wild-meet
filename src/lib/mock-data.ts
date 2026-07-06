@@ -29,13 +29,13 @@ export interface Outing {
 }
 
 const people = [
-  { name: "Yasmine", initials: "YA", color: "#C17B5C" },
-  { name: "Youssef", initials: "YO", color: "#2D4A3E" },
-  { name: "Salma", initials: "SA", color: "#8a5a3b" },
-  { name: "Rayan", initials: "RA", color: "#6b8e6a" },
-  { name: "Imane", initials: "IM", color: "#d49b6a" },
-  { name: "Anas", initials: "AN", color: "#4a6b5c" },
-  { name: "Khadija", initials: "KH", color: "#b8674a" },
+  { name: "Yasmine", initials: "YA", color: "#c17c74" },
+  { name: "Youssef", initials: "YO", color: "#8b6f5e" },
+  { name: "Salma", initials: "SA", color: "#d4a574" },
+  { name: "Rayan", initials: "RA", color: "#9a7a5b" },
+  { name: "Imane", initials: "IM", color: "#c2956b" },
+  { name: "Anas", initials: "AN", color: "#a67c5b" },
+  { name: "Khadija", initials: "KH", color: "#b06b5e" },
 ];
 
 export const outings: Outing[] = [
@@ -48,7 +48,7 @@ export const outings: Outing[] = [
     image: outing1,
     spotsTotal: 8,
     spotsTaken: 5,
-    organizer: { name: "Yasmine Benali", initials: "YB", avatarColor: "#C17B5C" },
+    organizer: { name: "Yasmine Benali", initials: "YB", avatarColor: "#c17c74" },
     description:
       "Two-day camp on the turquoise lake of Bin El Ouidane in the Atlas. Sunset paddle, tagine by the fire and a sunrise swim. Easy access, beginner friendly.",
     whatToBring: ["Tent & sleeping bag", "Headlamp", "Reusable mug", "Swimsuit", "A story to share"],
@@ -63,7 +63,7 @@ export const outings: Outing[] = [
     image: outing2,
     spotsTotal: 10,
     spotsTaken: 7,
-    organizer: { name: "Youssef Amrani", initials: "YA", avatarColor: "#2D4A3E" },
+    organizer: { name: "Youssef Amrani", initials: "YA", avatarColor: "#8b6f5e" },
     description:
       "A 9 km loop through the red rock walls of the Dades, finishing on a ridge for golden hour. Moderate pace. Mint tea break halfway.",
     whatToBring: ["Hiking shoes", "2L water", "Snack to share", "Layer for evening"],
@@ -78,7 +78,7 @@ export const outings: Outing[] = [
     image: outing3,
     spotsTotal: 6,
     spotsTaken: 4,
-    organizer: { name: "Salma Bennis", initials: "SB", avatarColor: "#8a5a3b" },
+    organizer: { name: "Salma Bennis", initials: "SB", avatarColor: "#d4a574" },
     description:
       "Dawn session on the longest right-hander in Morocco, followed by msemen and orange juice on the cliff. Boards available to share for all levels.",
     whatToBring: ["Swimwear", "Towel", "Reef-safe sunscreen", "Appetite"],
@@ -93,7 +93,7 @@ export const outings: Outing[] = [
     image: outing4,
     spotsTotal: 6,
     spotsTaken: 6,
-    organizer: { name: "Rayan El Idrissi", initials: "RE", avatarColor: "#6b8e6a" },
+    organizer: { name: "Rayan El Idrissi", initials: "RE", avatarColor: "#9a7a5b" },
     description:
       "Alpine start from the refuge for a sunrise on North Africa's highest peak. Technical sections, prior trekking experience required. Back to Imlil by afternoon.",
     whatToBring: ["Crampons", "Helmet", "Warm layers", "Headlamp", "1.5L water"],
@@ -108,7 +108,7 @@ export const outings: Outing[] = [
     image: outing5,
     spotsTotal: 12,
     spotsTaken: 3,
-    organizer: { name: "Imane Tazi", initials: "IT", avatarColor: "#d49b6a" },
+    organizer: { name: "Imane Tazi", initials: "IT", avatarColor: "#c2956b" },
     description:
       "Slow day among centenary cedars with a picnic clearing, Barbary macaques and a small talk on local fauna. Dogs welcome.",
     whatToBring: ["Picnic to share", "Comfortable shoes", "Camera"],
@@ -123,7 +123,7 @@ export const outings: Outing[] = [
     image: outing6,
     spotsTotal: 8,
     spotsTaken: 2,
-    organizer: { name: "Anas Cherkaoui", initials: "AC", avatarColor: "#4a6b5c" },
+    organizer: { name: "Anas Cherkaoui", initials: "AC", avatarColor: "#a67c5b" },
     description:
       "Paddle north from Taghazout to a cove only reachable by sea. Swim, snorkel and grilled sardines on the sand. Kayaks included.",
     whatToBring: ["Swimwear", "Dry bag", "Water bottle", "Snacks"],

@@ -33,8 +33,8 @@ function Profile() {
 
       {/* Banner */}
       <div className="relative h-64 w-full overflow-hidden bg-forest sm:h-80">
-        <div className="texture-grain absolute inset-0 bg-gradient-to-br from-forest via-[oklch(0.32_0.05_156)] to-terracotta" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(232,213,176,0.25),_transparent_60%)]" />
+        <div className="texture-grain absolute inset-0 bg-gradient-to-br from-forest via-[oklch(0.42_0.04_45)] to-terracotta" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(212,165,116,0.25),_transparent_60%)]" />
       </div>
 
       <main className="mx-auto -mt-28 max-w-6xl px-6 pb-32 sm:px-8 sm:-mt-32">

@@ -6,7 +6,7 @@
 
 /*
  * WildMeet design system.
- * Earthy, adventurous, warm — deep forest green, terracotta, warm sand, off-white.
+ * Desert Clay — dusty rose, warm sand, deep taupe, warm cream.
  * Headings: Playfair Display (bold serif). Body: Inter.
  */
 
@@ -51,24 +51,24 @@
   --color-terracotta-foreground: var(--terracotta-foreground);
   --color-cream: var(--cream);
 
-  --shadow-soft: 0 10px 30px -12px rgb(45 74 62 / 0.18);
-  --shadow-lift: 0 22px 50px -20px rgb(45 74 62 / 0.28);
+  --shadow-soft: 0 10px 30px -12px rgb(139 111 94 / 0.18);
+  --shadow-lift: 0 22px 50px -20px rgb(139 111 94 / 0.28);
 }
 
 :root {
   --radius: 0.875rem;
 
-  /* Brand */
-  --forest: oklch(0.36 0.04 156);              /* #2D4A3E deep forest green */
-  --forest-foreground: oklch(0.97 0.02 80);
-  --sand: oklch(0.87 0.05 80);                  /* #E8D5B0 warm sand */
-  --sand-foreground: oklch(0.30 0.04 156);
-  --terracotta: oklch(0.66 0.12 35);           /* #C17B5C terracotta */
+  /* Brand — Desert Clay */
+  --forest: oklch(0.5643 0.0437 52.80);              /* #8b6f5e deep taupe */
+  --forest-foreground: oklch(0.97 0.015 80);
+  --sand: oklch(0.7541 0.0852 67.09);                  /* #d4a574 warm sand */
+  --sand-foreground: oklch(0.3163 0.0245 42.83);
+  --terracotta: oklch(0.6563 0.0876 26.88);           /* #c17c74 dusty rose */
   --terracotta-foreground: oklch(0.98 0.01 80);
-  --cream: oklch(0.96 0.015 80);               /* #F5F0E8 off-white */
+  --cream: oklch(0.9547 0.0217 92.55);               /* #f5f0e0 warm cream */
 
   --background: var(--cream);
-  --foreground: oklch(0.24 0.03 156);
+  --foreground: oklch(0.3163 0.0245 42.83);           /* #3d2e28 deep brown */
 
   --card: oklch(0.99 0.008 80);
   --card-foreground: var(--foreground);
@@ -79,8 +79,8 @@
   --primary-foreground: var(--forest-foreground);
   --secondary: var(--sand);
   --secondary-foreground: var(--sand-foreground);
-  --muted: oklch(0.93 0.02 80);
-  --muted-foreground: oklch(0.45 0.02 150);
+  --muted: oklch(0.91 0.02 80);
+  --muted-foreground: oklch(0.50 0.02 50);
   --accent: var(--terracotta);
   --accent-foreground: var(--terracotta-foreground);
   --destructive: oklch(0.58 0.21 28);

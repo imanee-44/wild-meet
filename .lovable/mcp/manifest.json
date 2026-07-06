@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "wildmeet-mcp",
+      "version": "0.1.0",
+      "title": "WildMeet MCP"
+    },
+    "tools": [
+      {
+        "name": "list_outings",
+        "title": "List outings",
+        "description": "List upcoming WildMeet outings in Morocco. Optionally filter by category (Camping, Beach, Mountain).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "category": {
+              "description": "Filter outings by category.",
+              "type": "string",
+              "enum": [
+                "Camping",
+                "Beach",
+                "Mountain"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_outing",
+        "title": "Get outing details",
+        "description": "Get full details of a single WildMeet outing by its id.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Outing id, e.g. 'imsouane-surf-morning'."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "search_outings",
+        "title": "Search outings",
+        "description": "Full-text search across WildMeet outings by title, destination, or description. Optionally filter by category and only-with-spots-left.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Search text."
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "Camping",
+                "Beach",
+                "Mountain"
+              ]
+            },
+            "onlyWithSpotsLeft": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

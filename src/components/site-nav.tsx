@@ -1,7 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Compass, Home, PlusCircle, User } from "lucide-react";
+import { Compass, Home, LogOut, PlusCircle, User } from "lucide-react";
+import { useSession } from "@/hooks/use-session";
+import { supabase } from "@/integrations/supabase/client";
 
 export function SiteNav({ transparent = false }: { transparent?: boolean }) {
+  const { user } = useSession();
   const base = transparent
     ? "absolute top-0 left-0 right-0 z-30 text-cream"
     : "sticky top-0 z-30 bg-background/80 backdrop-blur-xl border-b border-border text-foreground";
@@ -23,20 +26,30 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
         <nav className="hidden items-center gap-9 text-sm font-medium md:flex">
           <Link to="/explore" {...linkProps}>Explorer</Link>
           <Link to="/create" {...linkProps}>Organiser</Link>
-          <Link to="/profile" {...linkProps}>Profil</Link>
+          {user && <Link to="/profile" {...linkProps}>Profil</Link>}
         </nav>
-        <Link
-          to="/explore"
-          className="hidden rounded-full bg-terracotta px-5 py-2.5 text-sm font-semibold text-terracotta-foreground shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift sm:inline-flex"
-        >
-          Rejoindre
-        </Link>
+        {user ? (
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="hidden items-center gap-1.5 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:border-terracotta hover:text-terracotta sm:inline-flex"
+          >
+            <LogOut className="h-3.5 w-3.5" /> Déconnexion
+          </button>
+        ) : (
+          <Link
+            to="/auth"
+            className="hidden rounded-full bg-terracotta px-5 py-2.5 text-sm font-semibold text-terracotta-foreground shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift sm:inline-flex"
+          >
+            Rejoindre
+          </Link>
+        )}
       </div>
     </header>
   );
 }
 
 export function MobileNav() {
+  const { user } = useSession();
   const linkProps = {
     activeProps: { className: "text-terracotta bg-terracotta/10" },
     inactiveProps: { className: "text-foreground/70" },
@@ -47,7 +60,11 @@ export function MobileNav() {
       <Link to="/" {...linkProps} className={item}><Home className="h-4 w-4" />Home</Link>
       <Link to="/explore" {...linkProps} className={item}><Compass className="h-4 w-4" />Explorer</Link>
       <Link to="/create" {...linkProps} className={item}><PlusCircle className="h-4 w-4" />Créer</Link>
-      <Link to="/profile" {...linkProps} className={item}><User className="h-4 w-4" />Profil</Link>
+      {user ? (
+        <Link to="/profile" {...linkProps} className={item}><User className="h-4 w-4" />Profil</Link>
+      ) : (
+        <Link to="/auth" {...linkProps} className={item}><User className="h-4 w-4" />Login</Link>
+      )}
     </nav>
   );
 }

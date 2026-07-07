@@ -14,7 +14,110 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      outing_participants: {
+        Row: {
+          joined_at: string
+          outing_id: string
+          user_id: string
+        }
+        Insert: {
+          joined_at?: string
+          outing_id: string
+          user_id: string
+        }
+        Update: {
+          joined_at?: string
+          outing_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outing_participants_outing_id_fkey"
+            columns: ["outing_id"]
+            isOneToOne: false
+            referencedRelation: "outings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      outings: {
+        Row: {
+          category: string
+          created_at: string
+          date: string
+          description: string
+          destination: string
+          id: string
+          image_key: string | null
+          image_url: string | null
+          organizer_id: string | null
+          spots_total: number
+          title: string
+          what_to_bring: string[]
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          date: string
+          description?: string
+          destination: string
+          id: string
+          image_key?: string | null
+          image_url?: string | null
+          organizer_id?: string | null
+          spots_total: number
+          title: string
+          what_to_bring?: string[]
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          date?: string
+          description?: string
+          destination?: string
+          id?: string
+          image_key?: string | null
+          image_url?: string | null
+          organizer_id?: string | null
+          spots_total?: number
+          title?: string
+          what_to_bring?: string[]
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_color: string
+          bio: string | null
+          city: string | null
+          created_at: string
+          id: string
+          initials: string
+          name: string
+          tags: string[]
+        }
+        Insert: {
+          avatar_color?: string
+          bio?: string | null
+          city?: string | null
+          created_at?: string
+          id: string
+          initials?: string
+          name?: string
+          tags?: string[]
+        }
+        Update: {
+          avatar_color?: string
+          bio?: string | null
+          city?: string | null
+          created_at?: string
+          id?: string
+          initials?: string
+          name?: string
+          tags?: string[]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

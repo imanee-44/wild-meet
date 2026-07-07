@@ -1,66 +1,96 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, ArrowUpRight, CalendarDays, Check, Clock, MapPin, Share2, Sparkles, Users } from "lucide-react";
+import { useMutation, useQueryClient, useSuspenseQuery, queryOptions } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { ArrowLeft, ArrowUpRight, CalendarDays, Check, Clock, Loader2, MapPin, Share2, Sparkles, Users } from "lucide-react";
 import { SiteNav, MobileNav } from "@/components/site-nav";
-import { getOuting, outings } from "@/lib/mock-data";
+import { getOutingById, listOutings, type OutingRow } from "@/lib/outings.functions";
+import { joinOuting, leaveOuting } from "@/lib/outings-mutations.functions";
+import { outingImage } from "@/lib/outings-images";
+import { useSession } from "@/hooks/use-session";
+import { useNavigate } from "@tanstack/react-router";
 
-import type { Outing } from "@/lib/mock-data";
+const outingQO = (id: string) => queryOptions({
+  queryKey: ["outing", id],
+  queryFn: () => getOutingById({ data: { id } }),
+});
+const outingsQO = () => queryOptions({ queryKey: ["outings"], queryFn: () => listOutings() });
 
 export const Route = createFileRoute("/outings/$id")({
-  loader: ({ params }): Outing => {
-    const outing = getOuting(params.id);
+  loader: async ({ params, context }) => {
+    const outing = await context.queryClient.ensureQueryData(outingQO(params.id));
     if (!outing) throw notFound();
-    return outing;
+    context.queryClient.ensureQueryData(outingsQO());
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.title} — WildMeet` },
-          { name: "description", content: loaderData.description.slice(0, 155) },
-          { property: "og:title", content: `${loaderData.title} — WildMeet` },
-          { property: "og:description", content: loaderData.description.slice(0, 155) },
-          { property: "og:image", content: loaderData.image },
-        ]
-      : [],
+  head: ({ params }) => ({
+    meta: [{ title: `Sortie — WildMeet` }, { name: "description", content: `Détails de la sortie WildMeet ${params.id}.` }],
   }),
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">
       <SiteNav />
       <div className="mx-auto max-w-2xl px-6 py-24 text-center">
         <h1 className="font-serif text-4xl font-bold">Sortie introuvable</h1>
-        <p className="mt-3 text-muted-foreground">Ce départ est peut-être déjà passé. Regarde les prochains.</p>
+        <p className="mt-3 text-muted-foreground">Ce départ est peut-être déjà passé.</p>
         <Link to="/explore" className="mt-6 inline-block rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">Voir les sorties</Link>
       </div>
+    </div>
+  ),
+  errorComponent: ({ error }) => (
+    <div className="min-h-screen bg-background p-12 text-center">
+      <p className="text-destructive">Erreur : {error.message}</p>
     </div>
   ),
   component: OutingDetail,
 });
 
 function OutingDetail() {
-  const o = Route.useLoaderData() as Outing;
-  const [joined, setJoined] = useState(false);
-  const spotsLeft = Math.max(0, o.spotsTotal - o.spotsTaken - (joined ? 1 : 0));
+  const { id } = Route.useParams();
+  const { data: outingData } = useSuspenseQuery(outingQO(id));
+  const o = outingData as OutingRow;
+  const { data: allOutings } = useSuspenseQuery(outingsQO());
+  const { user } = useSession();
+  const navigate = useNavigate();
+  const qc = useQueryClient();
+  const joinFn = useServerFn(joinOuting);
+  const leaveFn = useServerFn(leaveOuting);
 
-  const d = new Date(o.date);
-  const dateLong = d.toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const joined = !!user && o.participants.some((p) => p.user_id === user.id);
+
+  const joinMut = useMutation({
+    mutationFn: () => joinFn({ data: { outing_id: o.id } }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["outing", o.id] });
+      qc.invalidateQueries({ queryKey: ["outings"] });
+      qc.invalidateQueries({ queryKey: ["me"] });
+    },
   });
-  const time = d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  const leaveMut = useMutation({
+    mutationFn: () => leaveFn({ data: { outing_id: o.id } }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["outing", o.id] });
+      qc.invalidateQueries({ queryKey: ["outings"] });
+      qc.invalidateQueries({ queryKey: ["me"] });
+    },
+  });
 
-  const related = outings.filter((x) => x.category === o.category && x.id !== o.id).slice(0, 3);
-  const pct = Math.round(((o.spotsTaken + (joined ? 1 : 0)) / o.spotsTotal) * 100);
+  const spotsLeft = Math.max(0, o.spots_total - o.spots_taken);
+  const d = new Date(o.date);
+  const dateLong = d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  const time = d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  const related = allOutings.filter((x) => x.category === o.category && x.id !== o.id).slice(0, 3);
+  const pct = Math.round((o.spots_taken / o.spots_total) * 100);
+  const busy = joinMut.isPending || leaveMut.isPending;
+
+  function handleClick() {
+    if (!user) { navigate({ to: "/auth" }); return; }
+    if (joined) leaveMut.mutate(); else joinMut.mutate();
+  }
 
   return (
     <div className="min-h-screen bg-background">
       <SiteNav />
-
-      {/* Cover — editorial split */}
       <section className="relative">
         <div className="relative h-[68vh] min-h-[520px] w-full overflow-hidden">
-          <img src={o.image} alt={o.title} className="h-full w-full object-cover" />
+          <img src={outingImage(o)} alt={o.title} className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-black/40" />
         </div>
 
@@ -77,9 +107,7 @@ function OutingDetail() {
                 <Sparkles className="h-3.5 w-3.5" /> Places limitées
               </span>
             </div>
-            <h1 className="mt-5 font-serif text-4xl font-bold leading-[1.05] text-foreground sm:text-6xl">
-              {o.title}
-            </h1>
+            <h1 className="mt-5 font-serif text-4xl font-bold leading-[1.05] text-foreground sm:text-6xl">{o.title}</h1>
             <div className="mt-6 grid gap-4 border-t border-border pt-6 sm:grid-cols-3">
               <InfoRow icon={MapPin} label="Lieu" value={o.destination} />
               <InfoRow icon={CalendarDays} label="Date" value={dateLong} capitalize />
@@ -101,11 +129,8 @@ function OutingDetail() {
           <section>
             <SectionLabel n="02" label="Dans le sac" />
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-              {o.whatToBring.map((item, i) => (
-                <li
-                  key={item}
-                  className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 text-sm font-medium transition-all hover:-translate-y-0.5 hover:border-terracotta hover:shadow-soft"
-                >
+              {o.what_to_bring.map((item, i) => (
+                <li key={item} className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 text-sm font-medium transition-all hover:-translate-y-0.5 hover:border-terracotta hover:shadow-soft">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-forest/10 font-serif text-sm font-bold text-forest">
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -116,28 +141,25 @@ function OutingDetail() {
           </section>
 
           <section>
-            <SectionLabel n="03" label={`La tribu · ${o.spotsTaken}/${o.spotsTotal}`} />
+            <SectionLabel n="03" label={`La tribu · ${o.spots_taken}/${o.spots_total}`} />
             <div className="mt-6 rounded-3xl border border-border bg-card p-7 shadow-soft">
-              <div className="flex items-center gap-4">
-                <div
-                  className="flex h-14 w-14 items-center justify-center rounded-full text-sm font-bold text-white ring-4 ring-background"
-                  style={{ background: o.organizer.avatarColor }}
-                >
-                  {o.organizer.initials}
+              {o.organizer && (
+                <div className="flex items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full text-sm font-bold text-white ring-4 ring-background"
+                    style={{ background: o.organizer.avatar_color }}>
+                    {o.organizer.initials}
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground">Organisé par</p>
+                    <p className="font-serif text-xl font-bold text-foreground">{o.organizer.name}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground">Organisé par</p>
-                  <p className="font-serif text-xl font-bold text-foreground">{o.organizer.name}</p>
-                </div>
-              </div>
+              )}
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 {o.participants.map((p) => (
-                  <div key={p.name} className="flex items-center gap-2 rounded-full border border-border bg-background py-1 pl-1 pr-4">
-                    <div
-                      className="flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold text-white"
-                      style={{ background: p.color }}
-                    >
+                  <div key={p.user_id} className="flex items-center gap-2 rounded-full border border-border bg-background py-1 pl-1 pr-4">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: p.avatar_color }}>
                       {p.initials}
                     </div>
                     <span className="text-xs font-semibold text-foreground">{p.name}</span>
@@ -153,7 +175,6 @@ function OutingDetail() {
           </section>
         </div>
 
-        {/* Sticky booking */}
         <aside className="lg:sticky lg:top-24 lg:h-fit">
           <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-lift">
             <div className="bg-forest p-6 text-forest-foreground">
@@ -175,29 +196,24 @@ function OutingDetail() {
 
               <MiniRow label="Date" value={dateLong.split(" ").slice(0, 3).join(" ")} />
               <MiniRow label="Départ" value={time} />
-              <MiniRow label="Places" value={`${spotsLeft} sur ${o.spotsTotal}`} />
+              <MiniRow label="Places" value={`${spotsLeft} sur ${o.spots_total}`} />
 
-              <button
-                onClick={() => setJoined((v) => !v)}
-                disabled={spotsLeft === 0 && !joined}
+              <button onClick={handleClick} disabled={busy || (spotsLeft === 0 && !joined)}
                 className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold shadow-soft transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
-                  joined
-                    ? "bg-forest text-forest-foreground hover:bg-forest/90"
-                    : "bg-terracotta text-terracotta-foreground hover:-translate-y-0.5 hover:shadow-lift"
-                }`}
-              >
-                {joined ? (<><Check className="h-4 w-4" /> Tu es dedans</>) : (<>Rejoindre cette sortie <ArrowUpRight className="h-4 w-4" /></>)}
+                  joined ? "bg-forest text-forest-foreground hover:bg-forest/90" : "bg-terracotta text-terracotta-foreground hover:-translate-y-0.5 hover:shadow-lift"
+                }`}>
+                {busy ? <Loader2 className="h-4 w-4 animate-spin" /> :
+                  joined ? (<><Check className="h-4 w-4" /> Tu es dedans — quitter</>) :
+                  !user ? (<>Se connecter pour rejoindre <ArrowUpRight className="h-4 w-4" /></>) :
+                  (<>Rejoindre cette sortie <ArrowUpRight className="h-4 w-4" /></>)}
               </button>
 
               <button className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-border px-5 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-terracotta hover:text-terracotta">
                 <Share2 className="h-3.5 w-3.5" /> Partager la sortie
               </button>
 
-              {joined && (
-                <p className="text-center text-xs text-muted-foreground">
-                  On t'envoie le point de rendez-vous par email vendredi.
-                </p>
-              )}
+              {joinMut.error && <p className="text-center text-xs text-destructive">{(joinMut.error as Error).message}</p>}
+              {joined && <p className="text-center text-xs text-muted-foreground">On t'envoie le point de rendez-vous vendredi.</p>}
             </div>
           </div>
         </aside>
@@ -216,14 +232,10 @@ function OutingDetail() {
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r) => (
-                <Link
-                  key={r.id}
-                  to="/outings/$id"
-                  params={{ id: r.id }}
-                  className="group block overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
-                >
+                <Link key={r.id} to="/outings/$id" params={{ id: r.id }}
+                  className="group block overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift">
                   <div className="aspect-[4/3] overflow-hidden">
-                    <img src={r.image} alt={r.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={outingImage(r)} alt={r.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <div className="p-5">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-terracotta">{r.category}</p>
@@ -250,7 +262,6 @@ function SectionLabel({ n, label }: { n: string; label: string }) {
     </div>
   );
 }
-
 function InfoRow({ icon: Icon, label, value, capitalize }: { icon: typeof MapPin; label: string; value: string; capitalize?: boolean }) {
   return (
     <div className="flex items-start gap-3">
@@ -264,7 +275,6 @@ function InfoRow({ icon: Icon, label, value, capitalize }: { icon: typeof MapPin
     </div>
   );
 }
-
 function MiniRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between border-b border-border pb-3 text-sm last:border-0 last:pb-0">

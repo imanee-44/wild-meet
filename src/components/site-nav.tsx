@@ -34,12 +34,25 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
     ? "absolute top-0 left-0 right-0 z-30"
     : "sticky top-0 z-30";
 
-  const linkProps = {
-    activeProps: { className: "text-terracotta [&_span]:opacity-100" },
-    inactiveProps: { className: "text-foreground/70 hover:text-terracotta [&_span]:opacity-0 hover:[&_span]:opacity-100" },
-  };
+  const barClass = transparent
+    ? "relative z-10 flex items-center justify-between gap-4 rounded-2xl border border-cream/25 bg-transparent px-4 py-3 sm:px-6"
+    : "relative z-10 flex items-center justify-between gap-4 rounded-2xl border border-border/60 bg-background/85 px-4 py-3 shadow-lift backdrop-blur-xl sm:px-6";
+
+  const brandText = transparent ? "text-cream" : "text-foreground";
+  const departLabel = transparent ? "text-cream/60" : "text-muted-foreground";
+  const departValue = transparent ? "text-cream" : "text-foreground";
+
+  const linkProps = transparent
+    ? {
+        activeProps: { className: "text-sand [&_span]:opacity-100" },
+        inactiveProps: { className: "text-cream/85 hover:text-sand [&_span]:opacity-0 hover:[&_span]:opacity-100" },
+      }
+    : {
+        activeProps: { className: "text-terracotta [&_span]:opacity-100" },
+        inactiveProps: { className: "text-foreground/70 hover:text-terracotta [&_span]:opacity-0 hover:[&_span]:opacity-100" },
+      };
   const linkClass = "relative flex flex-col items-center gap-1 text-sm font-medium tracking-tight transition-colors";
-  const linkDot = "h-1 w-1 rounded-full bg-terracotta transition-opacity";
+  const linkDot = `h-1 w-1 rounded-full transition-opacity ${transparent ? "bg-sand" : "bg-terracotta"}`;
 
   return (
     <header className={wrap}>

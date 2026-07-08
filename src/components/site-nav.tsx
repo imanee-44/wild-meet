@@ -72,13 +72,13 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
           </div>
 
           {/* Main floating bar */}
-          <div className="relative z-10 flex items-center justify-between gap-4 rounded-2xl border border-border/60 bg-background/85 px-4 py-3 shadow-lift backdrop-blur-xl sm:px-6">
+          <div className={barClass}>
             {/* Brand */}
             <Link to="/" className="group flex shrink-0 items-center gap-3">
               <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-terracotta text-terracotta-foreground shadow-soft transition-transform group-hover:-rotate-6">
                 <span className="font-serif text-lg font-black leading-none">W</span>
               </span>
-              <span className="font-serif text-2xl font-bold tracking-tight text-foreground">WildMeet</span>
+              <span className={`font-serif text-2xl font-bold tracking-tight ${brandText}`}>WildMeet</span>
             </Link>
 
             {/* Center links */}
@@ -99,8 +99,8 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
             {/* Right: departure info + CTA */}
             <div className="flex shrink-0 items-center gap-4 sm:gap-6">
               <div className="hidden flex-col text-right lg:flex">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Prochain départ</span>
-                <span className="text-xs font-semibold capitalize text-foreground">{label}</span>
+                <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${departLabel}`}>Prochain départ</span>
+                <span className={`text-xs font-semibold capitalize ${departValue}`}>{label}</span>
               </div>
               {user ? (
                 <button

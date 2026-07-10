@@ -84,7 +84,7 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
             </Link>
 
             {/* Center links */}
-            <div className="hidden items-center gap-8 md:flex">
+            <div className="hidden items-center gap-10 md:flex">
               <Link to="/explore" {...linkProps} className={linkClass}>
                 Explorer<span className={linkDot} />
               </Link>

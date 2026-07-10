@@ -59,7 +59,7 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
       <div className="mx-auto w-full max-w-7xl px-4 pt-10 pb-16 sm:px-8 sm:pt-12 sm:pb-24">
         <nav className="relative">
           {/* Top accent chip */}
-          <div className="absolute -top-7 left-1/2 z-0 flex -translate-x-1/2 items-center gap-3 rounded-t-xl border border-b-0 border-forest/20 bg-forest px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-cream whitespace-nowrap shadow-soft">
+          <div className="absolute -bottom-7 left-1/2 z-0 flex -translate-x-1/2 items-center gap-3 rounded-b-xl border border-t-0 border-forest/20 bg-forest px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-cream whitespace-nowrap shadow-soft">
             <span className="flex items-center gap-2">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sand opacity-75"></span>

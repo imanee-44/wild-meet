@@ -56,10 +56,10 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
 
   return (
     <header className={wrap}>
-      <div className="mx-auto w-full max-w-7xl px-4 pt-10 pb-16 sm:px-8 sm:pt-12 sm:pb-24">
+      <div className="mx-auto w-full max-w-7xl px-4 pt-16 pb-16 sm:px-8 sm:pt-14 sm:pb-24">
         <nav className="relative">
           {/* Top accent chip */}
-          <div className="absolute -top-7 left-1/2 z-0 flex -translate-x-1/2 items-center gap-3 rounded-t-xl border border-b-0 border-forest/20 bg-forest px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-cream whitespace-nowrap shadow-soft">
+          <div className="absolute -top-9 left-1/2 z-0 flex max-w-[95vw] -translate-x-1/2 items-center gap-3 rounded-t-xl border border-b-0 border-forest/20 bg-forest px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-cream whitespace-nowrap shadow-soft sm:-top-7">
             <span className="flex items-center gap-2">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sand opacity-75"></span>
@@ -67,9 +67,10 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
               </span>
               {days === 0 ? "Aujourd'hui" : `J−${days}`} avant l'aventure
             </span>
-            <span className="opacity-30">|</span>
+            <span className="hidden opacity-30 sm:inline">|</span>
             <span className="hidden sm:inline">6 inconnus · 1 samedi</span>
           </div>
+
 
           {/* Main floating bar */}
           <div className={barClass}>

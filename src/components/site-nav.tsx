@@ -35,8 +35,9 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
     : "sticky top-0 z-30";
 
   const barClass = transparent
-    ? "relative z-10 flex items-center justify-between gap-4 rounded-2xl border border-cream/25 bg-transparent px-4 py-3 sm:px-6"
-    : "relative z-10 flex items-center justify-between gap-4 rounded-2xl border border-border/60 bg-background/85 px-4 py-3 shadow-lift backdrop-blur-xl sm:px-6";
+    ? "relative z-10 flex items-center justify-between gap-8 rounded-2xl border border-cream/25 bg-transparent px-5 py-3 sm:gap-12 sm:px-8"
+    : "relative z-10 flex items-center justify-between gap-8 rounded-2xl border border-border/60 bg-background/85 px-5 py-3 shadow-lift backdrop-blur-xl sm:gap-12 sm:px-8";
+
 
   const brandText = transparent ? "text-cream" : "text-foreground";
   const departLabel = transparent ? "text-cream/60" : "text-muted-foreground";
@@ -83,7 +84,7 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
             </Link>
 
             {/* Center links */}
-            <div className="hidden items-center gap-8 md:flex">
+            <div className="hidden items-center gap-10 md:flex">
               <Link to="/explore" {...linkProps} className={linkClass}>
                 Explorer<span className={linkDot} />
               </Link>

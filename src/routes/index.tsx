@@ -82,11 +82,11 @@ function Landing() {
           className="absolute inset-0 -z-10 h-full w-full object-cover" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/35 to-black/80" />
 
-        <div className="mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-20 pt-32 sm:px-8 sm:pb-28">
+        <div className="mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-32 pt-48 sm:px-8 sm:pb-40">
           <span className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-cream/30 bg-cream/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] backdrop-blur">
             <Sparkles className="h-3.5 w-3.5" /> Chaque samedi, un nouveau groupe
           </span>
-          <h1 className="max-w-4xl font-serif text-5xl font-bold leading-[1.02] sm:text-7xl md:text-[5.5rem]">
+          <h1 className="max-w-4xl font-serif text-5xl font-bold leading-[1.02] sm:text-7xl md:text-[3.5rem]">
             6 inconnus.<br />
             Une aventure. <span className="italic text-sand">Un samedi.</span>
           </h1>
@@ -112,7 +112,7 @@ function Landing() {
       </section>
 
       <section className="border-b border-border bg-forest text-cream">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 py-10 sm:px-8 md:flex-row">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-23 sm:px-8 md:flex-row">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sand">Prochain départ</p>
             <p className="mt-2 font-serif text-2xl font-bold sm:text-3xl">Samedi matin, partout au Maroc</p>

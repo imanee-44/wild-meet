@@ -138,7 +138,7 @@ function Landing() {
 
   return (
     <div className="min-h-screen bg-background">
-      <section className="relative isolate h-screen min-h-[680px] w-full overflow-hidden text-cream">
+      <section className="relative isolate min-h-screen w-full overflow-hidden text-cream sm:h-screen sm:min-h-[680px]">
         <SiteNav transparent />
         <img
           src={heroImg}
@@ -149,44 +149,47 @@ function Landing() {
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/35 to-black/80" />
 
-        <div className="mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-20 pt-32 sm:px-8 sm:pb-32 sm:pt-40 lg:pb-40">
-          <span className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-cream/30 bg-cream/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5" /> Chaque samedi, un nouveau groupe
-          </span>
-          <h1 className="max-w-4xl font-serif text-4xl font-bold leading-[1.02] sm:text-6xl lg:text-7xl">
-            6 inconnus.
-            <br />
-            Une aventure. <span className="italic text-sand">Un samedi.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-base text-cream/85 sm:text-lg">
-            WildMeet te matche avec cinq personnes près de chez toi pour une sortie nature au Maroc.
-          </p>
+        <div className="mx-auto flex min-h-screen flex-col justify-between px-6 py-16 sm:h-full sm:justify-end sm:pb-32 sm:pt-0 sm:py-0 sm:px-8 lg:pb-40">
+          <div />
+          <div className="space-y-8 sm:space-y-6">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-cream/30 bg-cream/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] backdrop-blur">
+              <Sparkles className="h-3.5 w-3.5" /> Chaque samedi, un nouveau groupe
+            </span>
+            <h1 className="max-w-4xl font-serif text-4xl font-bold leading-[1.02] sm:text-6xl lg:text-7xl">
+              6 inconnus.
+              <br />
+              Une aventure. <span className="italic text-sand">Un samedi.</span>
+            </h1>
+            <p className="max-w-xl text-base text-cream/85 sm:text-lg">
+              WildMeet te matche avec cinq personnes près de chez toi pour une sortie nature au Maroc.
+            </p>
 
-          <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
-            <Link
-              to="/explore"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-6 py-3 text-sm font-semibold text-terracotta-foreground shadow-lift transition-transform hover:-translate-y-0.5"
-            >
-              Réserver ma place <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/create"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-cream/40 bg-transparent px-6 py-3 text-sm font-semibold text-cream backdrop-blur transition-colors hover:bg-cream/10"
-            >
-              Organiser ma sortie
-            </Link>
-          </div>
+            <div className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
+              <Link
+                to="/explore"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-6 py-3 text-sm font-semibold text-terracotta-foreground shadow-lift transition-transform hover:-translate-y-0.5"
+              >
+                Réserver ma place <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/create"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-cream/40 bg-transparent px-6 py-3 text-sm font-semibold text-cream backdrop-blur transition-colors hover:bg-cream/10"
+              >
+                Organiser ma sortie
+              </Link>
+            </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-start gap-4 text-xs uppercase tracking-[0.18em] text-cream/70 sm:gap-6">
-            <span className="flex items-center gap-2">
-              <Users className="h-3.5 w-3.5" /> 2 400+ membres
-            </span>
-            <span className="flex items-center gap-2">
-              <MapPin className="h-3.5 w-3.5" /> 12 villes
-            </span>
-            <span className="hidden sm:flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5" /> 4,9 / 5
-            </span>
+            <div className="flex flex-wrap items-center justify-start gap-4 text-xs uppercase tracking-[0.18em] text-cream/70 sm:gap-6">
+              <span className="flex items-center gap-2">
+                <Users className="h-3.5 w-3.5" /> 2 400+ membres
+              </span>
+              <span className="flex items-center gap-2">
+                <MapPin className="h-3.5 w-3.5" /> 12 villes
+              </span>
+              <span className="hidden sm:flex items-center gap-2">
+                <Sparkles className="h-3.5 w-3.5" /> 4,9 / 5
+              </span>
+            </div>
           </div>
         </div>
       </section>

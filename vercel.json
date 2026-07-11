@@ -1,0 +1,26 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".output/public",
+  "framework": "other",
+  "nodeVersion": "20.x",
+  "env": {
+    "SUPABASE_PROJECT_ID": {
+      "description": "Your Supabase Project ID"
+    },
+    "SUPABASE_PUBLISHABLE_KEY": {
+      "description": "Your Supabase Publishable Key"
+    },
+    "SUPABASE_URL": {
+      "description": "Your Supabase URL"
+    },
+    "VITE_SUPABASE_PROJECT_ID": {
+      "description": "Your Supabase Project ID"
+    },
+    "VITE_SUPABASE_PUBLISHABLE_KEY": {
+      "description": "Your Supabase Publishable Key"
+    },
+    "VITE_SUPABASE_URL": {
+      "description": "Your Supabase URL"
+    }
+  }
+}
